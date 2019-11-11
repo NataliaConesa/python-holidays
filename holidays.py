@@ -2628,7 +2628,7 @@ class Spain(HolidayBase):
     def _populate(self, year):
         self[date(year, JAN, 1)] = "Año nuevo"
         self[date(year, JAN, 6)] = "Epifanía del Señor"
-        if self.prov and self.prov in ['CVA', 'MUR', 'MAD', 'NAV', 'PVA']:
+        if self.prov and self.prov in ['CVA', 'MUR', 'NAV', 'PVA']:
             self[date(year, MAR, 19)] = "San José"
         if self.prov and self.prov != 'CAT':
             self[easter(year) + rd(weeks=-1, weekday=TH)] = "Jueves Santo"
@@ -2685,6 +2685,33 @@ class Spain(HolidayBase):
 
 
 class ES(Spain):
+    pass
+
+
+class Andorra(HolidayBase):
+
+    def __init__(self, **kwargs):
+        self.country = 'AD'
+        HolidayBase.__init__(self, **kwargs)
+
+    def _populate(self, year):
+        self[date(year, JAN, 1)] = "Año nuevo"
+        self[date(year, JAN, 6)] = "Epifanía del Señor"
+        quaresma = easter(year) - rd(days=46)
+        self[quaresma - rd(weekday=MO(-1))] = "Carnaval"
+        self[date(year, MAR, 14)] = "Día de la constitución"
+        self[easter(year) + rd(weeks=-1, weekday=FR)] = "Viernes Santo"
+        self[easter(year) + rd(weekday=MO)] = "Lunes de Pascua"
+        self[date(year, MAY, 1)] = "Día del Trabajador"
+        self[easter(year) + rd(days=50)] = "Lunes de Pentecosta"
+        self[date(year, AUG, 15)] = "Asunción de la Virgen"
+        self[date(year, SEP, 8)] = "Ntra. Sra. De Meritxell (patrona Andorra)"
+        self[date(year, NOV, 1)] = "Todos los Santos"
+        self[date(year, DEC, 8)] = "La Inmaculada Concepción"
+        self[date(year, DEC, 25)] = "Navidad"
+        self[date(year, DEC, 26)] = "San Esteban"
+
+class AD(Andorra):
     pass
 
 
